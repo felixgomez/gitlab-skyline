@@ -147,7 +147,7 @@ def generate_skyline_stl(username, year, contribution_matrix):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="gitlab_generate_stl", description='Create STL from Gitlab contributions',
+    parser = argparse.ArgumentParser(prog="gitlab-skyline", description='Create STL from Gitlab contributions',
                                      epilog='Enjoy!')
     parser.add_argument('username', metavar=None, type=str, help='Gitlab username (without @)')
     parser.add_argument('year', metavar=None, type=int,
