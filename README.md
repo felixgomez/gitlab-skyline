@@ -1,6 +1,6 @@
-# `gitlab-skyline`. Your Gitlab's contributions in 3D Skyline
+# Your Gitlab's contributions in 3D Skyline
 
-A Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
+`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
 
 ```
 ~ gitlab-skyline -h
