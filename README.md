@@ -1,6 +1,6 @@
 # Your Gitlab's contributions in 3D Skyline
 
-`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
+>`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
 
 ```
 ~ gitlab-skyline -h
@@ -58,7 +58,7 @@ It quickly became viral among my friends, but in my daily work I use Gitlab more
 
 # Some details 
 
-The project was developed on a Friday afternoon, although I had consulted some information previously, so do not expect quality code and wonders. As always **pull requests are welcome!** 😍
+> The project was developed on a Friday afternoon, although I had consulted some information previously, so do not expect quality code and wonders. As always **pull requests are welcome!** 😍
 
 At first I was thinking to use the well known Gitlab endpoint `https://gitlab.com/users/userna,e/calendar.json` but the information it provides is for one year back from now.
 
