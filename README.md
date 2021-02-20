@@ -1,6 +1,6 @@
 # Your Gitlab's contributions in a 3D Skyline
 
->`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
+`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
 
 ```
 ~ gitlab-skyline -h
@@ -19,12 +19,13 @@ optional arguments:
 Enjoy!
 
 ```
+View a sample result of the preview at [samples/gitlab_felixgomez_2020.stl](samples/gitlab_felixgomez_2020.stl) and OpenSCAD generated code at [samples/gitlab_felixgomez_2020.scad](samples/gitlab_felixgomez_2020.scad).
 
 <img src="images/cura_sample.png" width="800">
 
 # Requirements and installation
 
-`gitlab-skyline` requires  python3 and OpenSCAD.
+`gitlab-skyline` requires python3 and OpenSCAD.
 
 
 Create your virtual environment as usual and install dependencies with
@@ -64,13 +65,13 @@ At first I was thinking to use the well known Gitlab endpoint `https://gitlab.co
 
 As far as I know Gitlab does not provide an endpoint to obtain contribution information by year but digging a bit I found that a call to `https://gitlab.com/users/username/calendar_activities?date=2021-02-01` returns an HTML response easy to scrape.
 
-I use classic [`BeautifulSoup`](https://www.crummy.com/software/BeautifulSoup/) for scraping and [`aiohttp`](https://docs.aiohttp.org/en/stable/) and [`asyncio`](https://docs.python.org/3/library/asyncio.html) to go asynchronous and speed up the scraping process.
+I made use of classic [`BeautifulSoup`](https://www.crummy.com/software/BeautifulSoup/) for scraping, [`aiohttp`](https://docs.aiohttp.org/en/stable/) and [`asyncio`](https://docs.python.org/3/library/asyncio.html) to go asynchronous and speed up the scraping process.
 
-There is an extra option to the `gitlab-skyline` command to control concurrent requests to Github to avoid the "Too many request" message from their server.
+There is an extra option to the `gitlab-skyline` command to control concurrent requests to Github to avoid the *"Too many request"* message from their server.
 
-[SolidPython](https://github.com/SolidCode/SolidPython) giis a beautiful pcode to piece of code to work with OpenSCAD from Python.
+[`SolidPython`](https://github.com/SolidCode/SolidPython) is a beautiful piece of code allowing to generate OpenSCAD code from Python.
 
-[`Numpy`](https://numpy.org/) wasn't really necessary, but it makes calculating and ordering matrices much easier.
+[`Numpy`](https://numpy.org/) wasn't really necessary, but it makes matrix calculations (like ordering) much easier.
 
 [`Inkscape`](https://inkscape.org/) was used to vectorize the Gitlab logo for extrusion (pending to correct the Viewbox due to lack of time).
 
@@ -79,3 +80,5 @@ There is an extra option to the `gitlab-skyline` command to control concurrent r
 I love openSCAD for a long time but there are some old well known issues related with errors in the generated geomerty. If you detect some on the final STL you could use https://www.meshlab.net/ to correct them.
 
 # Thanks!
+
+I hope you like it!
