@@ -16,12 +16,12 @@ import numpy as np
 __author__ = "Félix Gómez"
 
 
-async def get_contributions(semaphore, username, date, contribution_matrix):
+async def get_contributions(semaphore, domain, username, date, contribution_matrix):
     """Get contributions directly using Gitlab activities endpoint API (asynchronously)"""
     async with aiohttp.ClientSession(raise_for_status=True) as client:
         try:
             date_as_str = date.strftime("%Y-%m-%d")
-            url = 'https://gitlab.com/users/' + username + '/calendar_activities?date=' + date_as_str
+            url = domain + '/users/' + username + '/calendar_activities?date=' + date_as_str
             async with semaphore, client.get(url) as response:
                 content = await response.text()
                 soup = BeautifulSoup(content, 'html.parser')
@@ -136,7 +136,12 @@ def generate_skyline_stl(username, year, contribution_matrix):
             bars += bar
 
     scad_contributions_filename = 'gitlab_' + username + '_' + str(year)
-    scad_render_to_file(base_scad - logo_gitlab_scad + user_scad + year_scad + bars,
+    scad_skyline_object = base_scad - logo_gitlab_scad + user_scad + year_scad
+
+    if bars is not None:
+        scad_skyline_object += bars
+
+    scad_render_to_file(scad_skyline_object,
                         scad_contributions_filename + '.scad')
 
     subprocess.run(['openscad', '-o', scad_contributions_filename + '.stl', scad_contributions_filename + '.scad'],
@@ -149,16 +154,19 @@ def generate_skyline_stl(username, year, contribution_matrix):
 def main():
     parser = argparse.ArgumentParser(prog="gitlab-skyline", description='Create STL from Gitlab contributions',
                                      epilog='Enjoy!')
+    parser.add_argument('--domain', metavar=None, type=str, nargs="?", help='GitlabEE/CE custom domain',
+                        default='https://gitlab.com')
     parser.add_argument('username', metavar=None, type=str, help='Gitlab username (without @)')
     parser.add_argument('year', metavar=None, type=int,
                         help='Year of contributions to fetch', default=2020, nargs="?")
 
-    parser.add_argument('max_requests', metavar=None, type=int,
+    parser.add_argument('--max_requests', metavar=None, type=int,
                         help='Max. simultaneous request to Gitlab. Don\'t mess with their server!', default=10,
                         nargs="?")
 
     args = parser.parse_args()
 
+    domain = args.domain
     username = args.username
     max_requests = args.max_requests
     year = args.year
@@ -170,7 +178,8 @@ def main():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         asyncio.wait(
-            [get_contributions(semaphore, username, date, contribution_matrix) for date in all_dates_in_year(year)]))
+            [get_contributions(semaphore, domain, username, date, contribution_matrix) for date in
+             all_dates_in_year(year)]))
     loop.close()
 
     print("Generating STL...")

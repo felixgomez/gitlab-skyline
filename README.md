@@ -1,20 +1,21 @@
 # Your Gitlab's contributions in a 3D Skyline
 
-`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions like Github does at https://skyline.github.com/
+`gitlab-skyline` is a Python command to generate a skyline figure from Gitlab contributions as Github did at https://skyline.github.com/
 
 ```
-~ gitlab-skyline -h
-usage: gitlab-skyline [-h] username [year] [max_requests]
+~ usage: gitlab-skyline [-h] [--domain [DOMAIN]] [--max_requests [MAX_REQUESTS]] username [year]
 
 Create STL from Gitlab contributions
 
 positional arguments:
-  username      Gitlab username (without @)
-  year          Year of contributions to fetch
-  max_requests  Max. simultaneous request to Gitlab. Don't mess with their server!
+  username              Gitlab username (without @)
+  year                  Year of contributions to fetch
 
 optional arguments:
-  -h, --help    show this help message and exit
+  -h, --help            show this help message and exit
+  --domain [DOMAIN]     GitlabEE/CE custom domain
+  --max_requests [MAX_REQUESTS]
+                        Max. simultaneous request to Gitlab. Don't mess with their server!
 
 Enjoy!
 
@@ -45,11 +46,26 @@ openscad --version
 python gitlab-skyline felixgomez 2020
 ```
 or
-```bution
+```
 ./gitlab-skyline felixgomez 2020
 ```
 
 if file has execution permissions.
+
+If you want to get contributions from a custom installation you can use
+
+```
+./gitlab-skyline felixgomez 2020 --domain="https://customdomain.dev:8080"
+```
+
+# Using it in private/custom Gitlab installations
+
+As said before, you can use it in custom installations through the `--domain` modifier.
+
+**Don't forget to make your contributions public in your user profile settings.**
+
+[](images/profile_settings.png)
+[](images/gitlab_profile_info.png)
 
 # Motivation
 
@@ -61,13 +77,13 @@ It quickly became viral among my friends, but in my daily work I use Gitlab more
 
 > The project was developed on a Friday afternoon, although I had consulted some information previously, so do not expect quality code and wonders. As always **pull requests are welcome!** 😍
 
-At first I was thinking to use the well known Gitlab endpoint `https://gitlab.com/users/userna,e/calendar.json` but the information it provides is for one year back from now.
+At first I was thinking to use the well known Gitlab endpoint `https://gitlab.com/users/username/calendar.json` but the information it provides is for one year back from now.
 
 As far as I know Gitlab does not provide an endpoint to obtain contribution information by year but digging a bit I found that a call to `https://gitlab.com/users/username/calendar_activities?date=2021-02-01` returns an HTML response easy to scrape.
 
 I made use of classic [`BeautifulSoup`](https://www.crummy.com/software/BeautifulSoup/) for scraping, [`aiohttp`](https://docs.aiohttp.org/en/stable/) and [`asyncio`](https://docs.python.org/3/library/asyncio.html) to go asynchronous and speed up the scraping process.
 
-There is an extra option to the `gitlab-skyline` command to control concurrent requests to Github to avoid the *"Too many request"* message from their server.
+There is an extra option (`--max-requests`) to the `gitlab-skyline` command to control concurrent requests to Github to avoid the *"Too many request"* message from their server.
 
 [`SolidPython`](https://github.com/SolidCode/SolidPython) is a beautiful piece of code allowing to generate OpenSCAD code from Python.
 
