@@ -64,8 +64,8 @@ As said before, you can use it in custom installations through the `--domain` mo
 
 **Don't forget to make your contributions public in your user profile settings.**
 
-[](images/profile_settings.png)
-[](images/gitlab_profile_info.png)
+![](images/profile_settings.png)
+![](images/gitlab_profile_info.png)
 
 # Motivation
 
