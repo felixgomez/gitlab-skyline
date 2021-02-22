@@ -15,7 +15,7 @@ optional arguments:
   -h, --help            show this help message and exit
   --domain [DOMAIN]     GitlabEE/CE custom domain
   --max_requests [MAX_REQUESTS]
-                        Max. simultaneous request to Gitlab. Don't mess with their server!
+                        Max. simultaneous requests to Gitlab. Don't mess with their server!
 
 Enjoy!
 
@@ -83,7 +83,7 @@ As far as I know Gitlab does not provide an endpoint to obtain contribution info
 
 I made use of classic [`BeautifulSoup`](https://www.crummy.com/software/BeautifulSoup/) for scraping, [`aiohttp`](https://docs.aiohttp.org/en/stable/) and [`asyncio`](https://docs.python.org/3/library/asyncio.html) to go asynchronous and speed up the scraping process.
 
-There is an extra option (`--max-requests`) to the `gitlab-skyline` command to control concurrent requests to Github to avoid the *"Too many request"* message from their server.
+There is an extra option (`--max-requests`) to the `gitlab-skyline` command to control concurrent requests to Github to avoid the *"Too many requests"* message from their server.
 
 [`SolidPython`](https://github.com/SolidCode/SolidPython) is a beautiful piece of code allowing to generate OpenSCAD code from Python.
 
@@ -93,7 +93,7 @@ There is an extra option (`--max-requests`) to the `gitlab-skyline` command to c
 
 # Mesh optimization
 
-I love openSCAD for a long time but there are some old well known issues related with errors in the generated geomerty. If you detect some on the final STL you could use https://www.meshlab.net/ to correct them.
+I love openSCAD for a long time but there are some old well known issues related with errors in the generated geometry. If you detect some on the final STL you could use https://www.meshlab.net/ to correct them.
 
 # Thanks!
 

@@ -161,7 +161,7 @@ def main():
                         help='Year of contributions to fetch', default=2020, nargs="?")
 
     parser.add_argument('--max_requests', metavar=None, type=int,
-                        help='Max. simultaneous request to Gitlab. Don\'t mess with their server!', default=10,
+                        help='Max. simultaneous requests to Gitlab. Don\'t mess with their server!', default=10,
                         nargs="?")
 
     args = parser.parse_args()
