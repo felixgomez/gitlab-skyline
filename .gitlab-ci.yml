@@ -1,0 +1,23 @@
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+stages:
+  - build
+
+.docker_template: &docker
+  image: docker:18.09.7
+  services:
+  - docker:18.09.7-dind
+  stage: build
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  tags:
+    - docker
+
+build:web:
+  <<: *docker
+  script:
+    - docker build -t ${CI_REGISTRY_IMAGE} -f Dockerfile  .
+    - docker push ${CI_REGISTRY_IMAGE}
+  tags:
+    - docker
