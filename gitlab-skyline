@@ -86,9 +86,9 @@ def generate_skyline_stl(username, year, contribution_matrix):
     base_scad = polyhedron(points=base_points, faces=base_faces)
 
     year_scad = rotate([face_angle, 0, 0])(
-        translate([base_length - base_length / 5, base_height / 2 - base_top_offset / 2, -1.5])(
+        translate([base_length - base_length / 5, base_height / 2 - base_top_offset / 2 - 1, -1.5])(
             linear_extrude(height=2)(
-                text(str(year), 5)
+                text(str(year), 6)
             )
         )
     )
@@ -96,7 +96,7 @@ def generate_skyline_stl(username, year, contribution_matrix):
     user_scad = rotate([face_angle, 0, 0])(
         translate([base_length / 4, base_height / 2 - base_top_offset / 2, -1.5])(
             linear_extrude(height=2)(
-                text("@" + username, 4)
+                text("@" + username, 5)
             )
         )
     )
