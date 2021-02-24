@@ -87,8 +87,6 @@ There is an extra option (`--max-requests`) to the `gitlab-skyline` command to c
 
 [`SolidPython`](https://github.com/SolidCode/SolidPython) is a beautiful piece of code allowing to generate OpenSCAD code from Python.
 
-[`Numpy`](https://numpy.org/) wasn't really necessary, but it makes matrix calculations (like ordering) much easier.
-
 [`Inkscape`](https://inkscape.org/) was used to vectorize the Gitlab logo for extrusion (pending to correct the Viewbox due to lack of time).
 
 # Mesh optimization
