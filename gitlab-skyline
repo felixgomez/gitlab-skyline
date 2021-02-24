@@ -56,11 +56,12 @@ def parse_contribution_matrix(contribution_matrix):
 def generate_skyline_stl(username, year, contribution_matrix):
     year_contribution_list, max_contributions_by_day = parse_contribution_matrix(contribution_matrix)
 
-    base_top_width = 18
-    base_width = 25
-    base_length = 125
+    base_top_width = 23
+    base_width = 30
+    base_length = 150
     base_height = 10
     max_length_contributionbar = 20
+    bar_base_dimension = 2.5
 
     base_top_offset = (base_width - base_top_width) / 2
     face_angle = math.degrees(math.atan(base_height / base_top_offset))
@@ -88,7 +89,7 @@ def generate_skyline_stl(username, year, contribution_matrix):
     base_scad = polyhedron(points=base_points, faces=base_faces)
 
     year_scad = rotate([face_angle, 0, 0])(
-        translate([base_length - base_length / 5, base_height / 2 - base_top_offset / 2, -1])(
+        translate([base_length - base_length / 5, base_height / 2 - base_top_offset / 2, -1.5])(
             linear_extrude(height=2)(
                 text(str(year), 5)
             )
@@ -96,7 +97,7 @@ def generate_skyline_stl(username, year, contribution_matrix):
     )
 
     user_scad = rotate([face_angle, 0, 0])(
-        translate([base_length / 4, base_height / 2 - base_top_offset / 2, -1])(
+        translate([base_length / 4, base_height / 2 - base_top_offset / 2, -1.5])(
             linear_extrude(height=2)(
                 text("@" + username, 4)
             )
@@ -126,8 +127,10 @@ def generate_skyline_stl(username, year, contribution_matrix):
             continue
 
         bar = translate(
-            [base_top_offset + 2 + week_number * 2, base_top_offset + 2 + day_number * 2, base_height])(
-            cube([2, 2, year_contribution_list[i] * max_length_contributionbar / max_contributions_by_day])
+            [base_top_offset + 2.5 + (week_number-1) * bar_base_dimension,
+             base_top_offset + 2.5 + day_number * bar_base_dimension, base_height])(
+            cube([bar_base_dimension, bar_base_dimension,
+                  year_contribution_list[i] * max_length_contributionbar / max_contributions_by_day])
         )
 
         if bars is None:
