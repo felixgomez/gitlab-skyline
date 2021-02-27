@@ -58,7 +58,7 @@ If you want to get contributions from a custom installation you can use
 ./gitlab-skyline felixgomez 2020 --domain="https://customdomain.dev:8080"
 ```
 
-# Docker Uasge
+# Docker Usage
 
 For convience, a docker image is produced to generate the stl image file for you:
 
