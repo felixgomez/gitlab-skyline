@@ -58,6 +58,16 @@ If you want to get contributions from a custom installation you can use
 ./gitlab-skyline felixgomez 2020 --domain="https://customdomain.dev:8080"
 ```
 
+# Docker Uasge
+
+For convience, a docker image is produced to generate the stl image file for you:
+
+`docker run -v $PWD:/data registry.gitlab.com/felixgomez/gitlab-skyline <username> [<year>]`
+
+Example: `docker run -v $PWD:/data registry.gitlab.com/felixgomez/gitlab-skyline felixgomez`
+
+To use any custom parameters, simply append to the docker run command.
+
 # Using it in private/custom Gitlab installations
 
 As said before, you can use it in custom installations through the `--domain` modifier.
