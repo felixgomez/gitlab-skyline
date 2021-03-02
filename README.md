@@ -26,7 +26,7 @@ View a sample result of the preview at [samples/gitlab_felixgomez_2020.stl](samp
 
 # Requirements and installation
 
-`gitlab-skyline` requires python3 and OpenSCAD.
+`gitlab-skyline` requires python3 and OpenSCAD. (need Python version >= 3.7)
 
 
 Create your virtual environment as usual and install dependencies with
