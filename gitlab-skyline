@@ -8,7 +8,6 @@ import subprocess
 from calendar import monthrange
 
 import aiohttp
-from bs4 import BeautifulSoup
 from solid import *
 from solid.utils import *
 import os
@@ -16,17 +15,22 @@ import os
 __author__ = "Félix Gómez"
 
 
-async def get_contributions(semaphore, domain, username, date, contribution_matrix):
+async def get_contributions(semaphore, domain, username, token, date, contribution_matrix):
     """Get contributions directly using Gitlab activities endpoint API (asynchronously)"""
-    async with aiohttp.ClientSession(raise_for_status=True) as client:
+
+    headers = {}
+    if token:
+        headers['PRIVATE-TOKEN'] = token
+
+    async with aiohttp.ClientSession(raise_for_status=True, headers=headers) as client:
         try:
-            date_as_str = date.strftime("%Y-%m-%d")
-            url = domain + '/users/' + username + '/calendar_activities?date=' + date_as_str
+            after = (date-datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+            before = (date+datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+            url = f"{domain}/api/v4/users/{username}/events?after={after}&before={before}"
             async with semaphore, client.get(url) as response:
-                content = await response.text()
-                soup = BeautifulSoup(content, 'html.parser')
+                json = await response.json()
                 contribution_matrix.append(
-                    [int(date.strftime('%j')), int(date.strftime('%u')) - 1, len(soup.find_all('li'))])
+                    [int(date.strftime('%j')), int(date.strftime('%u')) - 1, len(json)])
 
         except Exception as err:
             print(f"Exception occured: {err}")
@@ -161,6 +165,8 @@ def main():
     parser.add_argument('year', metavar=None, type=int,
                         help='Year of contributions to fetch', default=2020, nargs="?")
 
+    parser.add_argument('--token', metavar=None, type=str, nargs="?", help='Personal access token',
+                        default=None)
     parser.add_argument('--max_requests', metavar=None, type=int,
                         help='Max. simultaneous requests to Gitlab. Don\'t mess with their server!', default=10,
                         nargs="?")
@@ -169,6 +175,7 @@ def main():
 
     domain = args.domain
     username = args.username
+    token = args.token
     max_requests = args.max_requests
     year = args.year
     contribution_matrix = []
@@ -179,7 +186,7 @@ def main():
     loop = asyncio.get_event_loop()
     loop.run_until_complete(
         asyncio.wait(
-            [get_contributions(semaphore, domain, username, date, contribution_matrix) for date in
+            [get_contributions(semaphore, domain, username, token, date, contribution_matrix) for date in
              all_dates_in_year(year)]))
     loop.close()
 
