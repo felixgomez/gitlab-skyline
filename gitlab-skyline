@@ -121,7 +121,7 @@ def generate_skyline_stl(username, year, contribution_matrix):
     week_number = 1
     for i in range(len(year_contribution_list)):
 
-        day_number = i % 7
+        day_number = 6 - (i % 7)
         if day_number == 0:
             week_number += 1
 
