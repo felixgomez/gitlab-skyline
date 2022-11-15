@@ -183,7 +183,7 @@ def main():
     print("Fetching contributions from Gitlab...")
 
     semaphore = asyncio.Semaphore(max_requests)
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
     loop.run_until_complete(
         asyncio.wait(
             [get_contributions(semaphore, domain, username, token, date, contribution_matrix) for date in
